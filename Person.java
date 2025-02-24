@@ -2,7 +2,7 @@ public class Person{
     //fields
     private int destination;
     private boolean direction; // true for going right, false for left
-    private int startLocation;
+    private int startLocation; 
 
 
 

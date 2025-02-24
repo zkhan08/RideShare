@@ -31,8 +31,8 @@ public class Person{
 
     }
     public String toString(){
-        return super.toString() + " Start: "  + startLocation +  " Destination: " + destination + " Going right?: " + direction;
+        return super.toString() + "Start: "  + startLocation +  " Destination: " + destination + " Going right?: " + direction;
     }
 
-}
+} 
 

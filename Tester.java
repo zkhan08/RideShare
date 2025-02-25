@@ -12,6 +12,7 @@ public class Tester {
         System.out.println(n);
         n.addPassanger(a);
         System.out.println(n);
+        System.out.println(n.unload());
     }
     
 }

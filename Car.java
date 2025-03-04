@@ -15,7 +15,7 @@ public class Car {
     }
 
     public String toString(){
-        return super.toString() + "Destination: " + destination + "Current location: " + currentLocation + "Going Right: " + direction + "Passangers: " + passangers;
+        return super.toString() + "Destination: " + destination + " Current location: " + currentLocation + " Going Right: " + direction + " Passangers: " + passangers;
 
     }
 

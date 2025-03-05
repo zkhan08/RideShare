@@ -3,24 +3,24 @@ import java.util.*;
 public class Car {
     //fields
     private int destination;
-    private int currentLocation;
-    private boolean direction; //true for right, false for left
-    private ArrayList<Person> passangers;
+    int currentLocation;
+    boolean direction; //true for right, false for left
+    private ArrayList<Person> passengers;
 
     public Car(int myDestination, int start){
         destination = myDestination;
         currentLocation = start;
         direction = destination > currentLocation;
-        passangers = new ArrayList<Person>();
+        passengers = new ArrayList<Person>();
     }
 
     public String toString(){
-        return super.toString() + "Destination: " + destination + " Current location: " + currentLocation + " Going Right: " + direction + " Passangers: " + passangers;
+        return super.toString() + "Destination: " + destination + " Current location: " + currentLocation + " Going Right: " + direction + " Passangers: " + passengers;
 
     }
 
     public void addPassanger(Person p){
-        if(passangers.size() >= 3){
+        if(passengers.size() >= 3){
             System.out.println("ERROR: No room!");
 
         }else if(p.getDirection() != direction){
@@ -29,7 +29,7 @@ public class Car {
         }else{
     
         
-        passangers.add(p);
+        passengers.add(p);
 
     }
     
@@ -54,10 +54,10 @@ public void move(){
  * @return one Person eligible to be dropped off, null if nobody is availible
  */
 public Person unload(){
-    for(int i = 0; i < passangers.size(); i++){
-        Person a = passangers.get(i);
+    for(int i = 0; i < passengers.size(); i++){
+        Person a = passengers.get(i);
         if(a.getDestination() == currentLocation){
-            return passangers.remove(i);
+            return passengers.remove(i);
             
         }
     }
@@ -65,7 +65,17 @@ public Person unload(){
 }
 
 public boolean hasRoom(){
-    return passangers.size() <3 ;
+    return passengers.size() <3 ;
+}
+
+public void dropOffPassengers() {
+   
+    throw new UnsupportedOperationException("Unimplemented method 'dropOffPassengers'");
+}
+
+public void pickUpPassenger(Person p) {
+   
+    throw new UnsupportedOperationException("Unimplemented method 'pickUpPassenger'");
 }
 }
 

@@ -1,62 +1,95 @@
+
+
 import java.util.*;
 
+
 public class Road {
-    private ArrayList<Station> stations;
-    private ArrayList<Car> cars;
-    private ArrayList<Person> people;
-    
-    public Road(int numStations, int numCars, int numPeople) {
-        stations = new ArrayList<>();
-        cars = new ArrayList<>();
-        people = new ArrayList<>();
-        
-        for (int i = 0; i < numStations; i++) {
-            stations.add(new Station(i));
-        }
-        
-        Random rand = new Random();
-        
-        for (int i = 0; i < numPeople; i++) {
-            int start = rand.nextInt(numStations);
-            int destination;
-            do {
-                destination = rand.nextInt(numStations);
-            } while (destination == start);
-            
-            Person p = new Person(destination, start);
-            people.add(p);
-            stations.get(start).addPerson(p);
-        }
-        
-        for (int i = 0; i < numCars; i++) {
-            int start = rand.nextInt(numStations);
-            int destination;
-            do {
-                destination = rand.nextInt(numStations);
-            } while (destination == start);
-            
-            Car c = new Car(destination, start);
-            cars.add(c);
-        }
-    }
-    
-    public void simulate(int steps) {
-        for (int i = 0; i < steps; i++) {
-            for (Car c : cars) {
-                Station currentStation = stations.get(c.currentLocation);
-                
-                while (c.hasRoom() && currentStation.hasPeopleGoingInDirection(c.direction)) {
-                    Person p = currentStation.getPersonGoingInDirection(c.direction);
-                    c.addPassanger(p);
-                }
-                
-                c.move();
-                
-                Person droppedOff;
-                while ((droppedOff = c.unload()) != null) {
-                    System.out.println("Dropped off " + droppedOff);
-                }
-            }
-        }
-    }
+   private Station[] stations;
+   private ArrayList<Car> cars;
+
+
+   private static final int NUMOFST = 10;
+
+
+   public Road(){
+       stations = new Station[NUMOFST];
+       for (int i = 0; i < stations.length; i++){
+           stations[i] = new Station(i);
+       }
+       cars = new ArrayList<Car>();
+   }
+
+
+   public void addPeople(int numPass){
+       for(int i = 0; i < numPass; i++){
+           int start = (int)(Math.random() * NUMOFST);
+           int stop = (int)(Math.random() * NUMOFST);
+           stations [start].addPerson(new Person (start, stop));
+       }
+   }
+
+
+   public void addCars(int numCars){
+       for(int i = 0; i < numCars; i++){
+           int start = (int)(Math.random() * NUMOFST);
+           int stop = (int)(Math.random() * NUMOFST);
+           cars.add(new Car(start, stop));
+       }
+   }
+
+
+   public String toString(){
+       String s = "Stations: \n";
+       for(Station st : stations){
+           s += st.toString();
+           s +="\n\n";
+       }
+       s += "Cars: \n";
+       for(Car c : cars){
+           s += c.toString();
+           s+= "\n";
+       }
+       return s;
+   }
+
+
+   /**
+    * This is the big method that moves all cars, unloads and loads passengers for one unit (of station movement time)
+    */
+
+
+   public void update(){
+       //unload all eligible people from cars to stations
+       for (Car c : cars){
+           //this gives an eligible person to remove or null if nobody is avaiable
+           while(true){
+           Person p = c.unload();
+           if( p != null){
+               int location = c.getLocation();
+               stations[location].addPerson(p); //stations of location add person p
+               //deal when if its just that car it at the end
+           } else {
+               break;
+           }
+       }
+       }
+
+
+       for(Station s: stations){
+           while(true){
+              
+           }
+       }
+       //load all eligible people from stations to cars
+       //going to be similar but now looping through stations and putting them in cars
+
+
+
+
+   //move all the cars
+       for(Car c : cars){
+           c.move();
+       }
+   }
 }
+ 

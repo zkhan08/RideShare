@@ -1,5 +1,3 @@
-
-
 import java.util.*;
 
 
@@ -24,7 +22,7 @@ public class Road {
        for(int i = 0; i < numPass; i++){
            int start = (int)(Math.random() * NUMOFST);
            int stop = (int)(Math.random() * NUMOFST);
-           stations [start].addPerson(new Person (start, stop));
+           stations [start].addPerson(new Person (stop, start));
        }
    }
 
@@ -56,40 +54,50 @@ public class Road {
    /**
     * This is the big method that moves all cars, unloads and loads passengers for one unit (of station movement time)
     */
-
-
    public void update(){
-       //unload all eligible people from cars to stations
-       for (Car c : cars){
-           //this gives an eligible person to remove or null if nobody is avaiable
-           while(true){
+       // Unload all eligible people from cars to stations
+       for (Car c : cars) {
            Person p = c.unload();
-           if( p != null){
-               int location = c.getLocation();
-               stations[location].addPerson(p); //stations of location add person p
-               //deal when if its just that car it at the end
-           } else {
-               break;
+           while (p != null) { // Unload until there are no more passengers
+               int location = c.getLocation(); // Using existing method to get current location
+               stations[location].addPerson(p); // Stations of location add person p
+               p = c.unload(); // Try to unload the next person
            }
        }
-       }
 
 
-       for(Station s: stations){
-           while(true){
-              
+       // Load all eligible people from stations to cars
+       for (Station s : stations) {
+           // Load leftbound people
+           Person leftPerson = s.nextLeft();
+           if (leftPerson != null) {
+               int location = s.getStationNumber();
+               if (location < cars.size()) {
+                   Car car = cars.get(location);
+                   if (!car.getDirection() && car.hasRoom()) { // Check direction and room
+                       car.addPassenger(leftPerson); // Add passenger if direction matches and there's room
+                   }
+               }
+           }
+
+
+           // Load rightbound people
+           Person rightPerson = s.nextRight();
+           if (rightPerson != null) {
+               int location = s.getStationNumber();
+               if (location < cars.size()) {
+                   Car car = cars.get(location);
+                   if (car.getDirection() && car.hasRoom()) { // Check direction and room
+                       car.addPassenger(rightPerson); // Add passenger if direction matches and there's room
+                   }
+               }
            }
        }
-       //load all eligible people from stations to cars
-       //going to be similar but now looping through stations and putting them in cars
 
 
-
-
-   //move all the cars
-       for(Car c : cars){
+       // Move all the cars
+       for (Car c : cars) {
            c.move();
        }
    }
 }
- 

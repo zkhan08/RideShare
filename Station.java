@@ -1,4 +1,3 @@
-
 import java.util.*;
 public class Station {
    //fields
@@ -64,5 +63,9 @@ public class Station {
        s+= "Rightbound: " + waitingRight.toString() + "\n";
        s+= "Done: " + done.toString() + "\n";
        return s;
+   }
+
+   public int getStationNumber() {
+       return stationNumber;
    }
 }

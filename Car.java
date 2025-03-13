@@ -76,6 +76,11 @@ public class Car {
    public int getLocation(){
        return currentLocation;
    }
+
+   public boolean getDirection(){
+       return direction;
+   }
+
 }
 
 

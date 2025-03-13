@@ -50,6 +50,13 @@ public class Road {
        return s;
    }
 
+   public int completePassangers(){
+    int count = 0;
+    for (Station s : stations){
+        count += s.doneCount();
+    }
+    return count;
+   }
 
    /**
     * This is the big method that moves all cars, unloads and loads passengers for one unit (of station movement time)

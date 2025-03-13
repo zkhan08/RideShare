@@ -9,7 +9,11 @@ public class Tester {
         System.out.println(r);
         r.update();
         System.out.println("********************************");
+        for(int i = 0; i < 1000; i++){
+            r.update();
+        }
         System.out.println(r);
+        System.out.println(r.completePassangers() + " people made it to their destination.");
         
 
     }

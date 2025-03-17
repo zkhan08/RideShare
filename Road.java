@@ -6,7 +6,7 @@ public class Road {
    private ArrayList<Car> cars;
 
 
-   private static final int NUMOFST = 10;
+   private static final int NUMOFST = 32;
 
 
    public Road(){
@@ -66,9 +66,9 @@ public class Road {
        for (Car c : cars) {
            Person p = c.unload();
            while (p != null) { // Unload until there are no more passengers
-               int location = c.getLocation(); // Using existing method to get current location
-               stations[location].addPerson(p); // Stations of location add person p
-               p = c.unload(); // Try to unload the next person
+               int location = c.getLocation(); 
+               stations[location].addPerson(p); 
+               p = c.unload(); 
            }
        }
 
@@ -102,9 +102,23 @@ public class Road {
        }
 
 
-       // Move all the cars
-       for (Car c : cars) {
-           c.move();
+       for (int i = cars.size() - 1; i >= 0; i--) {
+           Car c = cars.get(i);
+           if(c.getLocation() == c.getDestination()){
+               cars.remove(i);
+           } else {
+               c.move();
+           }   
        }
+
+       
+   }
+
+   public boolean carsLeft(){
+        if(cars.isEmpty()){
+            return false;
+        } else {
+           return true;
+        }
    }
 }
